@@ -49,7 +49,7 @@ body{
     border-radius: 0px 30px 30px 0px;
 }
 
-.todolist__del-btn{
+.todolist__del-btn, .todolist__edit-btn, .todolist__get-btn{
     width: 70px;
     display: inline-block;
     font: 16px/20px 'Quicksand', sans-serif;
@@ -64,12 +64,23 @@ body{
     border-left: none;
 }
 
-.todolist__del-btn:hover, .todolist__btn:hover{
+.todolist__del-btn:hover, .todolist__btn:hover, .todolist__edit-btn:hover, .todolist__get-btn:hover{
     background-color: #a1cef3;
 }
 
-.todolist__del-btn:active, .todolist__btn:active{
+.todolist__del-btn:active, .todolist__btn:active, .todolist__edit-btn:active, .todolist__get-btn:active{
     background-color: #4c82ce;
+}
+
+.todolist__edit-btn{
+    border-radius: 0px;
+    border-right: none;
+}
+
+.todolist__get-btn{
+    width: 40px;
+    border-left: 1px solid #0d4e7a;
+    border-radius: 0px;
 }
 
 .todolist__title{
@@ -103,7 +114,7 @@ body{
 .todolist__item{
     max-width: 500px;
     display: grid;
-    grid-template-columns: 30px 1fr 64px;
+    grid-template-columns: 30px 1fr 64px 40px 64px;
     align-items: center;
     margin: 0 0 18px 0;
     padding:5px 5px 5px 14px; 
@@ -114,6 +125,11 @@ body{
     overflow: hidden;
     position: relative;
     box-shadow: 4px 6px 2px 1px rgb(54 54 57 / 20%)
+}
+
+.todolist__task{
+    border: none;
+    margin: 0;
 }
 
 .todolist__item::before {
@@ -136,6 +152,10 @@ body{
 .done{
     background-color: rgb(105, 236, 5);
     text-decoration: line-through;
+}
+
+.editing{
+    background-color: rgb(105, 236, 5);
 }
 
 .error {

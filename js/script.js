@@ -11,6 +11,8 @@ const errorMessage = document.querySelector(".todolist__error-message_disabled")
 task.addEventListener("focus", handleFocus );
 form.addEventListener("submit", handleSubmit );
 list.addEventListener("click", deleteTask );
+list.addEventListener("click", editTask );
+list.addEventListener("click", changeTaskButton );
 list.addEventListener("change", handleDone );
 
 
@@ -42,16 +44,29 @@ function handleSubmit(event) {
 
 function addNewTask() {
     let li = document.createElement('li');
-    li.textContent = task.value;
+    let taskArea = document.createElement('input');
+    taskArea.type = "text";
+    taskArea.className = "todolist__task";
+    taskArea.value = task.value;
+    taskArea.setAttribute("readonly", "readonly");
     li.className = "todolist__item";
     let done = document.createElement('input');
     done.type = "checkbox";
     done.className = "form-check-input";
-    let del = document.createElement('button');
-    del.className = "todolist__del-btn";
-    del.innerHTML = "Delete";
+    let editTask = document.createElement('button');
+    editTask.className = "todolist__edit-btn";
+    editTask.innerHTML = "edit";
+    let getTask = document.createElement('button');
+    getTask.className = "todolist__get-btn";
+    getTask.innerHTML = "Get";
+    let delTask = document.createElement('button');
+    delTask.className = "todolist__del-btn";
+    delTask.innerHTML = "Delete";
     list.append(li);
-    li.append(del);
+    li.append(taskArea);
+    li.append(editTask);
+    li.append(getTask);
+    li.append(delTask);
     li.prepend(done);
     form.reset();
 }
@@ -61,8 +76,12 @@ function handleDone(event) {
     
     if(doneButton) {
         let row = event.target.closest(".todolist__item");
+        let taskRow = row.querySelector('.todolist__task');
         row.classList.toggle("done");
+        taskRow.classList.toggle("done");
         row.querySelector(".todolist__del-btn").remove();
+        row.querySelector(".todolist__get-btn").remove();
+        row.querySelector(".todolist__edit-btn").remove();
         event.target.disabled = true;
         clearDoneTasks();
     }
@@ -75,6 +94,33 @@ function deleteTask(event) {
     if (removeButton) {
         let row = event.target.closest(".todolist__item");
         row.remove();
+    }
+}
+
+
+function editTask(event) {
+    let editTask = event.target.className === "todolist__edit-btn";
+    let row = event.target.closest(".todolist__item");
+    let taskRow = row.querySelector('.todolist__task');
+
+    if(editTask) {
+        taskRow.removeAttribute("readonly");
+        taskRow.focus();
+    } else {
+        taskRow.setAttribute("readonly", "readonly");
+    }
+
+}
+
+function changeTaskButton(event) {
+    let editTask = event.target.className === "todolist__edit-btn";
+
+    if (editTask.toString().toLowerCase() == "edit") {
+        editTask.innerHTML = "Save";
+        editTask.classList.toggle("editing");
+    } else {
+        editTask.innerText = "Edit";
+        editTask.classList.toggle("editing");
     }
 }
 
