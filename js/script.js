@@ -17,6 +17,7 @@ list.addEventListener("click", handleEditTask );
 list.addEventListener("click", handleGetTask );
 doingList.addEventListener("click", handleDoneTask );
 doingList.addEventListener("click", handleReturnTask );
+doneList.addEventListener("click", handleDeleteTask );
 
 
 
@@ -56,13 +57,10 @@ function addNewTask() {
     li.className = "todolist__item";
     let editTask = document.createElement('button');
     editTask.className = "todolist__edit-btn";
-    editTask.innerHTML = "Edit";
     let getTask = document.createElement('button');
     getTask.className = "todolist__get-btn";
-    getTask.innerHTML = "Get";
     let delTask = document.createElement('button');
     delTask.className = "todolist__del-btn";
-    delTask.innerHTML = "Del";
     list.append(li);
     li.append(taskArea);
     li.append(editTask);
@@ -121,22 +119,20 @@ function handleGetTask(event) {
         taskArea.value = taskText;
         taskArea.setAttribute("readonly", "readonly");
         li.className = "doing__item";
-        let delTask = document.createElement('button');
-        delTask.className = "todolist__del-btn";
-        delTask.innerHTML = "Done";
+        let doneTask = document.createElement('button');
+        doneTask.className = "todolist__done-btn";
         let returnTask = document.createElement('button');
-        returnTask.className = "todolist__edit-btn";
-        returnTask.innerHTML = "Return"; //edit css
+        returnTask.className = "todolist__return-btn";
         doingList.append(li);
         li.append(taskArea);
         li.append(returnTask)
-        li.append(delTask);
+        li.append(doneTask);
         row.remove();
     }
 }
 
 function handleDoneTask(event) {
-    let doneButton = event.target.className === "todolist__del-btn";
+    let doneButton = event.target.className === "todolist__done-btn";
     let row = event.target.closest(".doing__item");
     let textArea = row.querySelector(".todolist__task");
     let taskText = textArea.value;
@@ -148,11 +144,14 @@ function handleDoneTask(event) {
         taskArea.className = "todolist__task";
         taskArea.value = taskText;
         taskArea.setAttribute("readonly", "readonly");
-        li.className = "done__item";
+        li.className = "todolist__item done__item";
         li.classList.toggle("done");
         taskArea.classList.toggle("done");
+        let delTask = document.createElement('button');
+        delTask.className = "todolist__del-btn";
         doneList.append(li);
         li.append(taskArea);
+        li.append(delTask);
         row.remove();
     }
     clearDoneTasks();
@@ -160,7 +159,7 @@ function handleDoneTask(event) {
 
 
 function handleReturnTask(event) {
-    let returnButton = event.target.className === "todolist__edit-btn";
+    let returnButton = event.target.className === "todolist__return-btn";
     let row = event.target.closest(".doing__item");
     let textArea = row.querySelector(".todolist__task");
     let taskText = textArea.value;
