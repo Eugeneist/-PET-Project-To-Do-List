@@ -14,7 +14,7 @@
 <body>
     <div class="menu">
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <input class="form-check-input menu__input" type="checkbox" id="flexSwitchCheckDefault">
             <label class="form-check-label" for="flexSwitchCheckDefault">Clear Done Tasks</label>
         </div>
         <div class="clock">
@@ -23,18 +23,32 @@
     </div>
 
     <div class="container">
-        <div class="todolist">
-            <h1 class="todolist__title">Todo List</h1>
-    
-            <form class="todolist__form">
-                <input class="todolist__text" type="text" placeholder="Add your task!" />
-                <button class="todolist__btn" type="submit">Add</button>
-                <div class="todolist__error-message_disabled">
-                    <p class="error-message__text">This field is required!</p>
-                </div>
-            </form>
-            
-            <ul class="todolist__list" id="list"></ul>
+        <div class="todolist__top">
+            <div class="todolist__add">
+                <h1 class="todolist__title">Todo List</h1>
+        
+                <form class="todolist__form">
+                    <input class="todolist__text" type="text" placeholder="Add your task!" />
+                    <button class="todolist__btn" type="submit">Add</button>
+                    <div class="todolist__error-message_disabled">
+                        <p class="error-message__text">This field is required!</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="todolist__bot">
+            <div class="newtasks">
+                <h2 class="tasks__title">New Tasks</h2>
+                <ul class="todolist__list" id="list"></ul>
+            </div>
+            <div class="doingtasks">
+                <h2 class="tasks__title">Doing Tasks</h2>
+                <ul class="doing__list"></ul>
+            </div>
+            <div class="donetasks">
+                <h2 class="tasks__title">Done Tasks</h2>
+                <ul class="done__list"></ul>
+            </div>
         </div>
     </div>
 

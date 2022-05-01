@@ -7,13 +7,17 @@ const task = document.querySelector(".todolist__text");
 const btn = document.querySelector(".todolist__btn");
 const list = document.getElementById("list");
 const errorMessage = document.querySelector(".todolist__error-message_disabled");
+const doingList = document.querySelector(".doing__list");
+const doneList = document.querySelector(".done__list");
 
 task.addEventListener("focus", handleFocus );
 form.addEventListener("submit", handleSubmit );
-list.addEventListener("click", deleteTask );
-list.addEventListener("click", editTask );
-list.addEventListener("click", changeTaskButton );
-list.addEventListener("change", handleDone );
+list.addEventListener("click", handleDeleteTask );
+list.addEventListener("click", handleEditTask );
+list.addEventListener("click", handleGetTask );
+doingList.addEventListener("click", handleDoneTask );
+doingList.addEventListener("click", handleReturnTask );
+
 
 
 function handleFocus() {
@@ -50,45 +54,24 @@ function addNewTask() {
     taskArea.value = task.value;
     taskArea.setAttribute("readonly", "readonly");
     li.className = "todolist__item";
-    let done = document.createElement('input');
-    done.type = "checkbox";
-    done.className = "form-check-input";
     let editTask = document.createElement('button');
     editTask.className = "todolist__edit-btn";
-    editTask.innerHTML = "edit";
+    editTask.innerHTML = "Edit";
     let getTask = document.createElement('button');
     getTask.className = "todolist__get-btn";
     getTask.innerHTML = "Get";
     let delTask = document.createElement('button');
     delTask.className = "todolist__del-btn";
-    delTask.innerHTML = "Delete";
+    delTask.innerHTML = "Del";
     list.append(li);
     li.append(taskArea);
     li.append(editTask);
     li.append(getTask);
     li.append(delTask);
-    li.prepend(done);
     form.reset();
 }
 
-function handleDone(event) {
-    const doneButton = event.target.className === "form-check-input";
-    
-    if(doneButton) {
-        let row = event.target.closest(".todolist__item");
-        let taskRow = row.querySelector('.todolist__task');
-        row.classList.toggle("done");
-        taskRow.classList.toggle("done");
-        row.querySelector(".todolist__del-btn").remove();
-        row.querySelector(".todolist__get-btn").remove();
-        row.querySelector(".todolist__edit-btn").remove();
-        event.target.disabled = true;
-        clearDoneTasks();
-    }
-}
-
-
-function deleteTask(event) {
+function handleDeleteTask(event) {
     const removeButton = event.target.className === "todolist__del-btn";
 
     if (removeButton) {
@@ -98,7 +81,7 @@ function deleteTask(event) {
 }
 
 
-function editTask(event) {
+function handleEditTask(event) {
     let editTask = event.target.className === "todolist__edit-btn";
     let row = event.target.closest(".todolist__item");
     let taskRow = row.querySelector('.todolist__task');
@@ -112,17 +95,84 @@ function editTask(event) {
 
 }
 
-function changeTaskButton(event) {
-    let editTask = event.target.className === "todolist__edit-btn";
+// function changeTaskButton(event) {
+//     let editTask = event.target.className === "todolist__edit-btn";
 
-    if (editTask.toString().toLowerCase() == "edit") {
-        editTask.innerHTML = "Save";
-        editTask.classList.toggle("editing");
-    } else {
-        editTask.innerText = "Edit";
-        editTask.classList.toggle("editing");
+//     if (editTask.toString().toLowerCase() == "edit") {
+//         editTask.innerHTML = "Save";
+//         editTask.classList.toggle("editing");
+//     } else {
+//         editTask.innerText = "edit";
+//         editTask.classList.toggle("editing");
+//     }
+// }
+
+function handleGetTask(event) {
+    let getButton = event.target.className === "todolist__get-btn";
+    let row = event.target.closest(".todolist__item");
+    let textArea = row.querySelector(".todolist__task");
+    let taskText = textArea.value;
+
+    if(getButton) {
+        let li = document.createElement('li');
+        let taskArea = document.createElement('input');
+        taskArea.type = "text";
+        taskArea.className = "todolist__task";
+        taskArea.value = taskText;
+        taskArea.setAttribute("readonly", "readonly");
+        li.className = "doing__item";
+        let delTask = document.createElement('button');
+        delTask.className = "todolist__del-btn";
+        delTask.innerHTML = "Done";
+        let returnTask = document.createElement('button');
+        returnTask.className = "todolist__edit-btn";
+        returnTask.innerHTML = "Return"; //edit css
+        doingList.append(li);
+        li.append(taskArea);
+        li.append(returnTask)
+        li.append(delTask);
+        row.remove();
     }
 }
 
+function handleDoneTask(event) {
+    let doneButton = event.target.className === "todolist__del-btn";
+    let row = event.target.closest(".doing__item");
+    let textArea = row.querySelector(".todolist__task");
+    let taskText = textArea.value;
+
+    if(doneButton) {
+        let li = document.createElement('li');
+        let taskArea = document.createElement('input');
+        taskArea.type = "text";
+        taskArea.className = "todolist__task";
+        taskArea.value = taskText;
+        taskArea.setAttribute("readonly", "readonly");
+        li.className = "done__item";
+        li.classList.toggle("done");
+        taskArea.classList.toggle("done");
+        doneList.append(li);
+        li.append(taskArea);
+        row.remove();
+    }
+    clearDoneTasks();
+}
+
+
+function handleReturnTask(event) {
+    let returnButton = event.target.className === "todolist__edit-btn";
+    let row = event.target.closest(".doing__item");
+    let textArea = row.querySelector(".todolist__task");
+    let taskText = textArea.value;
+
+    if(returnButton) {
+        addNewTask();
+        let li = document.querySelector('.todolist__list li:last-child');
+        let taskArea = li.querySelector(".todolist__task");
+        taskArea.value = taskText;
+        li.prepend(taskArea);
+        row.remove();
+    }
+}
 
 

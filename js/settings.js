@@ -1,4 +1,5 @@
 const clearBtn = document.querySelector(".form-check-input");
+const doneList = document.querySelector(".done__list");
 clearBtn.addEventListener("change", allDoneTasks );
 
 
@@ -9,11 +10,11 @@ export function clearDoneTasks() {
 }
 
 function DoneTasks() {
-    let doneTask = list.querySelector(".done");
+    let doneTask = doneList.querySelector(".done");
     doneTask.remove();
 }
 
 function allDoneTasks() {
-    let doneTasks = list.querySelectorAll(".done");
+    let doneTasks = doneList.querySelectorAll(".done");
     setTimeout(() => { doneTasks.forEach(doneTask => { doneTask.remove();}) }, 400);
 }
