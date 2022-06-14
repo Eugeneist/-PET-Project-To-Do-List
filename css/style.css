@@ -48,6 +48,7 @@ body{
     background-color: #cbe3f6;
     color: #3871c1;
     border-radius: 0px 30px 30px 0px;
+    transition: all 0.3s;
 }
 
 .todolist__del-btn, .todolist__edit-btn, .todolist__get-btn, .todolist__return-btn, .todolist__done-btn{
@@ -64,14 +65,17 @@ body{
     border-radius: 0px 20px 20px 0px;
     border-left: none;
     position: relative;
+    transition: all 0.3s;
 }
 
 .todolist__del-btn:hover, .todolist__btn:hover, .todolist__edit-btn:hover, .todolist__get-btn:hover, .todolist__return-btn:hover, .todolist__done-btn:hover{
     background-color: #a1cef3;
+    transition: all 0.3s;
 }
 
 .todolist__del-btn:active, .todolist__btn:active, .todolist__edit-btn:active, .todolist__get-btn:active{
     background-color: #4c82ce;
+    transition: all 0.3s;
 }
 
 .todolist__edit-btn{
@@ -334,6 +338,7 @@ body{
 }
 
 .clock{
+    margin-block: auto;
     font: 15px/19px 'Quicksand', sans-serif; 
 }
 
@@ -377,4 +382,35 @@ body{
 .todolist__task-color{
     width: 18px;
     height: 18px;
+}
+
+.modal-title, .form-check-label {
+    color: #4c82ce;
+}
+
+.settings {
+    position: relative;
+    padding: 15px 15px;
+    filter: invert(99%) sepia(30%) saturate(2%) hue-rotate(300deg) brightness(116%) contrast(100%);
+    transition: all 0.3s;
+}
+
+.settings::before{
+    content: "";
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-image: url(/images/settings.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
+}
+
+.settings:hover{
+    filter: none;
+    transition: all 0.3s;
 }
